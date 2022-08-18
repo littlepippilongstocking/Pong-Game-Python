@@ -1,6 +1,6 @@
 """
 Dilyana Koleva, August 2022
-Pong Game with turtle
+Pong Game with Turtle
 """
 
 # Turtle module is great with graphics and especially for starting with game development
@@ -10,11 +10,14 @@ import winsound
 
 window = turtle.Screen()
 window.title("Pong")
-window.bgpic("bg.gif")
+window.bgcolor("black")
 window.setup(width=800, height=600)
 
 # Stops the window from updating / Speeds up the game
 window.tracer(0)
+
+# Winning score
+winning_score = 10
 
 # Score
 score_a = 0
@@ -24,7 +27,7 @@ score_b = 0
 left = turtle.Turtle()
 left.speed(0)
 left.shape("square")
-left.color("black")
+left.color("white")
 left.shapesize(stretch_wid=5, stretch_len=1)
 left.penup()
 left.goto(-350, 0)
@@ -33,7 +36,7 @@ left.goto(-350, 0)
 right = turtle.Turtle()
 right.speed(0)
 right.shape("square")
-right.color("black")
+right.color("white")
 right.shapesize(stretch_wid=5, stretch_len=1)
 right.penup()
 right.goto(350, 0)
@@ -42,21 +45,20 @@ right.goto(350, 0)
 ball = turtle.Turtle()
 ball.speed(0)
 ball.shape("circle")
-ball.color("black")
+ball.color("white")
 ball.penup()
 ball.goto(0, 0)
 ball.dx = 0.2
 ball.dy = -0.2
 
-
 # Pen
 pen = turtle.Turtle()
 pen.speed(0)
-pen.color("black")
+pen.color("white")
 pen.penup()
 pen.hideturtle()
 pen.goto(0, 260)
-pen.write("Player A: 0    Player B: 0", align="center", font=("Courier", 24, "bold"))
+pen.write("Player A: 0    Player B: 0", align="center", font=("ComicSans", 24, "bold"))
 
 
 # Function to move left paddle
@@ -113,20 +115,18 @@ while True:
 
     # Left and Right Border
     if ball.xcor() > 390:
-        ball.goto(0, 0)
         ball.dx *= -1
         score_a += 1
         pen.clear()
         pen.write("Player A: {}    Player B: {}".format(score_a, score_b), align="center",
-                  font=("Courier", 24, "bold"))
+                  font=("ComicSans", 24, "bold"))
 
     elif ball.xcor() < -390:
-        ball.goto(0, 0)
         ball.dx *= -1
         score_b += 1
         pen.clear()
         pen.write("Player A: {}    Player B: {}".format(score_a, score_b), align="center",
-                  font=("Courier", 24, "bold"))
+                  font=("ComicSans", 24, "bold"))
 
     if (340 < ball.xcor() < 350) and right.ycor() + 50 > ball.ycor() > right.ycor() - 50:
         ball.setx(340)
@@ -141,3 +141,16 @@ while True:
     elif (340 < ball.xcor() < 350) and right.ycor() + 50 > ball.ycor() > right.ycor() - 50:
         ball.setx(340)
         ball.dx *= -1
+
+    won = False
+    if score_a >= winning_score:
+        won = True
+        win_text = "Player A Won!"
+    elif score_b >= winning_score:
+        won = True
+        win_text = "Player B Won!"
+
+    if won:
+        pen.clear()
+        pen.write(win_text, align="center", font=("ComicSans", 24, "bold"))
+        ball.goto(0, 0)
