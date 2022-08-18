@@ -1,5 +1,5 @@
 # Pong-Game-Python
-A beginner's Pong game made on Python with turtle instead of pygame
+Two versions of the Pong game. One made with Turtle and another with PyGame
 
 NB:
 Any images uploaded into turtle should be in gif format
